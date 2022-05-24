@@ -24,11 +24,7 @@ async def send_welcome(message: types.Message):
         if cards == None:
             break
         cards_full = "КАРТА: " + cards[1].upper() + "\n\n✨ДЕКЛАРАЦИЯ✨\n\n " + cards[2] + "\n\n✨НАМЕРЕНИЕ✨\n\n " + cards[3] + "\n" + cards[4]
-        await bot.send_message(message.chat.id, cards_full, reply_markup=button)  
-        # await bot.send_message(message.chat.id, "✨КАРТА✨\n " + cards[1])  
-        # await bot.send_message(message.chat.id, "✨ДЕКЛАРАЦИЯ✨\n " + cards[2])  
-        # await bot.send_message(message.chat.id, "✨НАМЕРЕНИЕ✨\n " + cards[3])
-        # await bot.send_message(message.chat.id, cards[4])
+        await bot.send_message(message.chat.id, cards_full, reply_markup=button)          
     cur.close()
     conn.close()
 
