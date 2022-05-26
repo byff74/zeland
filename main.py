@@ -1,5 +1,3 @@
-from cgitb import text
-from email import message
 from aiogram import Bot, Dispatcher, executor, types
 from aiogram.types import ReplyKeyboardMarkup, KeyboardButton
 import sqlite3
@@ -10,14 +8,21 @@ dp = Dispatcher(bot)
 button_card = KeyboardButton("Вытащить карту 💫")
 button = ReplyKeyboardMarkup(resize_keyboard=True).add(button_card)   
 
+conn = sqlite3.connect('zeland.db')    
+cur = conn.cursor()
+
+def db_table_val(id_user):
+    cur.execute('INSERT INTO taro (id_user) VALUES (?)', (id_user,))
+    conn.commit()
+
 @dp.message_handler(commands=['start'])
-async def send_welcome(message: types.Message):
-    await message.answer("Привет\n Нажми на кнопку и вытащи свою карту на день", reply_markup=button)
+async def send_welcome(message: types.Message):   
+    await message.answer("Привет 👋\nНажми на кнопку и вытащи свою карту на день", reply_markup=button) 
+    us_id = message.chat.id
+    db_table_val(id_user = us_id)  
 
 @dp.message_handler(text="Вытащить карту 💫")
-async def send_welcome(message: types.Message):        
-    conn = sqlite3.connect('zeland.db')    
-    cur = conn.cursor()
+async def send_welcome(message: types.Message):
     cur.execute("SELECT * FROM taro ORDER BY RANDOM() LIMIT 1")
     while True:
         cards = cur.fetchone()
