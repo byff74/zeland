@@ -18,7 +18,7 @@ def db_table_val(id_user):
 @dp.message_handler(commands=['start'])
 async def send_welcome(message: types.Message):   
     await message.answer("Привет 👋\nНажми на кнопку и вытащи свою карту на день", reply_markup=button) 
-    us_id = message.chat.id
+    us_id = message.from_user.id
     db_table_val(id_user = us_id)  
 
 @dp.message_handler(text="Вытащить карту 💫")
